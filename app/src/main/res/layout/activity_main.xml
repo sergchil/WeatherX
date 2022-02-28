@@ -166,8 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginBottom="48dp"
-            android:clipToPadding="false"
-            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

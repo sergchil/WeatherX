@@ -2,11 +2,17 @@ package com.chilisoft.weatherx
 
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.chilisoft.weatherx.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -21,6 +27,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         handleInsets()
+
+        val adapter = WeaklyForecastAdapter(mutableListOf())
+        binding.weaklyForecast.layoutManager = LinearLayoutManager(this, HORIZONTAL, false)
+        binding.weaklyForecast.adapter = adapter
+
+        // this will add the space to the last item as well
+        // beter to extend the DividerItemDecoration and fix
+        val d = DividerItemDecoration(this, LinearLayout.HORIZONTAL)
+        ContextCompat.getDrawable(this, R.drawable.recycler_view_space_decoration)?.let {
+            d.setDrawable(it)
+        }
+
+        binding.weaklyForecast.addItemDecoration(d)
+        val list = mutableListOf<HourlyForecastDto>()
+
+        repeat(20) {
+            list.add(HourlyForecastDto())
+        }
+        adapter.updateDataSet(list)
     }
 
     private fun handleInsets() {
