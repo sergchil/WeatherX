@@ -12,8 +12,17 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.chilisoft.weatherx.databinding.ActivityMainBinding
+
+// add readme
+// add permission check
+// add geocoder
+// add mvvm layer
+// add local and remote data sourses
+// add animation
+// handle no internet case
+// add unit tests
+
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -28,7 +37,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         handleInsets()
 
-        val adapter = WeaklyForecastAdapter(mutableListOf())
+        val adapter = HourlyForecastAdapter(mutableListOf())
         binding.weaklyForecast.layoutManager = LinearLayoutManager(this, HORIZONTAL, false)
         binding.weaklyForecast.adapter = adapter
 
