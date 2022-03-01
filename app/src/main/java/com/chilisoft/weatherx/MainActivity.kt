@@ -13,6 +13,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import com.chilisoft.weatherx.databinding.ActivityMainBinding
+import com.chilisoft.weatherx.network.WeatherService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 
 // add readme
 // add permission check
@@ -55,6 +61,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             list.add(HourlyForecastDto())
         }
         adapter.updateDataSet(list)
+
+
+        // TODO: network test
+        GlobalScope.launch {
+            val weatherService: WeatherService = get<WeatherService>()
+            weatherService.getCurrentWeather("yerevan")
+        }
+
     }
 
     private fun handleInsets() {
