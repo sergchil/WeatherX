@@ -9,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,8 +22,6 @@ import org.koin.android.ext.android.inject
 // add readme
 // add permission check
 // add geocoder
-// add mvvm layer
-// add local and remote data sourses
 // add animation
 // handle no internet case
 // add unit tests
@@ -64,7 +61,6 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun registerObservables() {
-        // Start a coroutine in the lifecycle scope
         lifecycleScope.launch {
             launch { collectCurrentWeather() }
             launch { collectHourlyForecast() }
@@ -73,7 +69,7 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
 
     private suspend fun collectCurrentWeather() {
         mainScreenViewModel.stateCurrentWeather
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(lifecycle)
             .collect { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {
@@ -95,7 +91,7 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
 
     private suspend fun collectHourlyForecast() {
         mainScreenViewModel.stateHourlyForecast
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(lifecycle)
             .collect { uiState ->
 
                 when (uiState) {

@@ -3,6 +3,7 @@ package com.chilisoft.weatherx.presentation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.chilisoft.weatherx.databinding.RvItemHourlyForecastBinding
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 
@@ -18,7 +19,7 @@ class HourlyForecastAdapter(private val dataSet: MutableList<HourlyForecast>) : 
     class ViewHolder(val binding: RvItemHourlyForecastBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HourlyForecast) {
             binding.weakDay.text = item.weakDay
-//            binding.icon.text = item.icon
+            binding.icon.load(item.icon) { crossfade(true) }
             binding.temperature.text = item.temperature
         }
     }
@@ -31,6 +32,5 @@ class HourlyForecastAdapter(private val dataSet: MutableList<HourlyForecast>) : 
         viewHolder.bind(dataSet[position])
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 }

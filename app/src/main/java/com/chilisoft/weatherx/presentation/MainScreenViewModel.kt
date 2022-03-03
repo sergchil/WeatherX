@@ -7,8 +7,10 @@ import com.chilisoft.weatherx.domain.model.CurrentWeather
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import com.chilisoft.weatherx.domain.usecase.GetCurrentWeatherUseCase
 import com.chilisoft.weatherx.domain.usecase.GetHourlyForecastUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainScreenViewModel(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
@@ -37,26 +39,23 @@ class MainScreenViewModel(
                     }
                 }
             }
-            .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
 
-//        getCurrentWeatherUseCase(city)
-//            .onEach { result ->
-//                when (result) {
-//                    is Resource.Loading -> {
-//                        _stateCurrentWeather.emit(UiState.Loading)
-//                    }
-//                    is Resource.Success -> {
-//                        _stateCurrentWeather.emit(UiState.Success(result.data))
-//                    }
-//                    is Resource.Error -> {
-//                        _stateCurrentWeather.emit(UiState.Error(result.message ?: "An unexpected error occurred"))
-//                    }
-//                }
-//
-//            }
-//            .flowOn(Dispatchers.IO)
-//            .launchIn(viewModelScope)
+        getCurrentWeatherUseCase(city)
+            .onEach { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _stateCurrentWeather.emit(UiState.Loading)
+                    }
+                    is Resource.Success -> {
+                        _stateCurrentWeather.emit(UiState.Success(result.data))
+                    }
+                    is Resource.Error -> {
+                        _stateCurrentWeather.emit(UiState.Error(result.message ?: "An unexpected error occurred"))
+                    }
+                }
 
+            }
+            .launchIn(viewModelScope)
     }
 }

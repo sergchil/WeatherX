@@ -17,7 +17,6 @@ class GetHourlyForecastUseCaseImpl(private val weatherRepository: WeatherReposit
             emit(Resource.Loading())
             val weather = weatherRepository.getHourlyForecast(city).toHourlyForecast()
             emit(Resource.Success(weather))
-
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
