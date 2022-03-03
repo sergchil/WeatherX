@@ -1,20 +1,22 @@
-package com.chilisoft.weatherx
+package com.chilisoft.weatherx.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chilisoft.weatherx.databinding.RvItemHourlyForecastBinding
+import com.chilisoft.weatherx.domain.model.HourlyForecast
 
-class HourlyForecastAdapter(private val dataSet: MutableList<HourlyForecastDto>) : RecyclerView.Adapter<HourlyForecastAdapter.ViewHolder>() {
+class HourlyForecastAdapter(private val dataSet: MutableList<HourlyForecast>) : RecyclerView.Adapter<HourlyForecastAdapter.ViewHolder>() {
 
-    fun updateDataSet(newDatSet: MutableList<HourlyForecastDto>) {
+    fun updateDataSet(newDatSet: MutableList<HourlyForecast>?) {
+        if (newDatSet == null) return
         dataSet.clear()
         dataSet.addAll(newDatSet)
         notifyDataSetChanged()
     }
 
     class ViewHolder(val binding: RvItemHourlyForecastBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HourlyForecastDto) {
+        fun bind(item: HourlyForecast) {
             binding.weakDay.text = item.weakDay
 //            binding.icon.text = item.icon
             binding.temperature.text = item.temperature

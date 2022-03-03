@@ -1,9 +1,9 @@
-package com.chilisoft.weatherx.network
+package com.chilisoft.weatherx.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
 
-data class FiveDaysThreeHourForecastModel(
+data class NetworkFiveDaysThreeHourForecast(
     @SerializedName("city")
     val city: City,
     @SerializedName("cnt")
@@ -51,7 +51,7 @@ data class FiveDaysThreeHourForecastModel(
         @SerializedName("main")
         val main: Main,
         @SerializedName("pop")
-        val pop: Int, // 0
+        val pop: Double, // 0
         @SerializedName("rain")
         val rain: Rain,
         @SerializedName("snow")

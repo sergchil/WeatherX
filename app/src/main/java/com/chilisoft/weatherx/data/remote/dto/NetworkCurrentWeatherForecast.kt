@@ -1,9 +1,9 @@
-package com.chilisoft.weatherx.network
+package com.chilisoft.weatherx.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
 
-data class CurrentWeatherForecastModel(
+data class NetworkCurrentWeatherForecast(
     @SerializedName("base")
     val base: String, // stations
     @SerializedName("clouds")
