@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -18,11 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import coil.load
 import com.chilisoft.weatherx.R
 import com.chilisoft.weatherx.common.Constants
+import com.chilisoft.weatherx.common.Units
 import com.chilisoft.weatherx.databinding.ActivityMainBinding
 import com.chilisoft.weatherx.domain.model.CurrentWeather
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.*
+
 
 // add readme
 // add permission check
@@ -37,6 +40,7 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var binding: ActivityMainBinding
     private lateinit var hourlyForecastAdapter: HourlyForecastAdapter
     private val mainScreenViewModel: MainScreenViewModel by inject()
+    private var settingsDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +118,40 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
         binding.realFeel.title.text = "Real Feel"
         binding.realFeel.detail.text = data.realFeel
 
+        binding.settingsButton.setOnClickListener {
+            val index = mainScreenViewModel.getSelectedUnit()
+            val items = mainScreenViewModel.getSettingItems()
+            openSettingsDialog(items, index) {
+                mainScreenViewModel.saveSelectedUnit()
+                mainScreenViewModel.fetchWeather("yerevan")
+            }
+        }
+
     }
+
+    private fun openSettingsDialog(items: List<Units>, selectedIndex: Int, onSelectCallback: (Units) -> Unit) {
+        hideSettingsDialog()
+        settingsDialog = AlertDialog.Builder(this)
+            .setSingleChoiceItems(items.map { it.fullName }.toTypedArray(), selectedIndex, null)
+            .setPositiveButton("OK") { dialog, whichButton ->
+                val selectedPosition: Int = (dialog as AlertDialog).listView.checkedItemPosition
+                onSelectCallback(items[selectedPosition])
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun hideSettingsDialog() {
+        settingsDialog?.dismiss()
+        settingsDialog = null
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hideSettingsDialog()
+    }
+
 
     private suspend fun collectHourlyForecast() {
         mainScreenViewModel.stateHourlyForecast

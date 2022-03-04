@@ -3,6 +3,7 @@ package com.chilisoft.weatherx.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chilisoft.weatherx.common.Resource
+import com.chilisoft.weatherx.common.Units
 import com.chilisoft.weatherx.domain.model.CurrentWeather
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import com.chilisoft.weatherx.domain.usecase.GetCurrentWeatherUseCase
@@ -24,7 +25,6 @@ class MainScreenViewModel(
     val stateHourlyForecast: StateFlow<UiState<List<HourlyForecast>>> = _stateHourlyForecast
 
     fun fetchWeather(city: String) {
-
         getHourlyForecastUseCase(city)
             .onEach { result ->
                 when (result) {
@@ -57,5 +57,18 @@ class MainScreenViewModel(
 
             }
             .launchIn(viewModelScope)
+    }
+
+
+    fun getSelectedUnit(): Int {
+        TODO("Not yet implemented")
+    }
+
+    fun getSettingItems(): List<Units> {
+        return listOf(Units.Fahrenheit, Units.Celsius)
+    }
+
+    fun saveSelectedUnit() {
+        TODO("Not yet implemented")
     }
 }
