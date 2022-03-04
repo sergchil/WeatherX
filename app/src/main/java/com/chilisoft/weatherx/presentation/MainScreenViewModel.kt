@@ -3,7 +3,7 @@ package com.chilisoft.weatherx.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chilisoft.weatherx.common.Resource
-import com.chilisoft.weatherx.common.Units
+import com.chilisoft.weatherx.common.TemperatureUnits
 import com.chilisoft.weatherx.domain.model.CurrentWeather
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import com.chilisoft.weatherx.domain.usecase.GetCurrentWeatherUseCase
@@ -29,7 +29,7 @@ class MainScreenViewModel(
     private val _stateHourlyForecast = MutableStateFlow<UiState<List<HourlyForecast>>>(UiState.Loading)
     val stateHourlyForecast: StateFlow<UiState<List<HourlyForecast>>> = _stateHourlyForecast
 
-    fun fetchWeather(city: String, unit: Units) {
+    fun fetchWeather(city: String, unit: TemperatureUnits) {
         getHourlyForecastUseCase(city, unit)
             .onEach { result ->
                 when (result) {
@@ -64,15 +64,15 @@ class MainScreenViewModel(
             .launchIn(viewModelScope)
     }
 
-    fun getPreferredUnit(): Units {
+    fun getPreferredUnit(): TemperatureUnits {
         return getPreferredUnitUseCase()
     }
 
-    fun getSettingItems(): List<Units> {
-        return listOf(Units.Fahrenheit, Units.Celsius)
+    fun getSettingItems(): List<TemperatureUnits> {
+        return listOf(TemperatureUnits.Fahrenheit, TemperatureUnits.Celsius)
     }
 
-    fun savePreferredUnit(units: Units) {
-        savePreferredUnitUseCase(units)
+    fun savePreferredUnit(temperatureUnits: TemperatureUnits) {
+        savePreferredUnitUseCase(temperatureUnits)
     }
 }

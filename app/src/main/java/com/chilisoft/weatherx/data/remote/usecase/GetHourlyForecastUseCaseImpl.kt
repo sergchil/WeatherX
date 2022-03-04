@@ -1,7 +1,7 @@
 package com.chilisoft.weatherx.data.remote.usecase
 
 import com.chilisoft.weatherx.common.Resource
-import com.chilisoft.weatherx.common.Units
+import com.chilisoft.weatherx.common.TemperatureUnits
 import com.chilisoft.weatherx.data.mapper.toHourlyForecast
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import com.chilisoft.weatherx.domain.repository.WeatherRepository
@@ -13,10 +13,10 @@ import java.io.IOException
 
 class GetHourlyForecastUseCaseImpl(private val weatherRepository: WeatherRepository) : GetHourlyForecastUseCase {
 
-    override fun invoke(city: String, unit: Units): Flow<Resource<List<HourlyForecast>>> = flow {
+    override fun invoke(city: String, unit: TemperatureUnits): Flow<Resource<List<HourlyForecast>>> = flow {
         try {
             emit(Resource.Loading())
-            val weather = weatherRepository.getHourlyForecast(city, unit.networkParam).toHourlyForecast()
+            val weather = weatherRepository.getHourlyForecast(city, unit.networkParam).toHourlyForecast(unit)
             emit(Resource.Success(weather))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

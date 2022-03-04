@@ -1,7 +1,7 @@
 package com.chilisoft.weatherx.domain.usecase
 
-import com.chilisoft.weatherx.common.Units
+import com.chilisoft.weatherx.common.TemperatureUnits
 
 interface GetPreferredUnitUseCase {
-    operator fun invoke(): Units
+    operator fun invoke(): TemperatureUnits
 }

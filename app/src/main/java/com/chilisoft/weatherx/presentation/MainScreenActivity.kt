@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import coil.load
 import com.chilisoft.weatherx.R
 import com.chilisoft.weatherx.common.Constants
-import com.chilisoft.weatherx.common.Units
+import com.chilisoft.weatherx.common.TemperatureUnits
 import com.chilisoft.weatherx.databinding.ActivityMainBinding
 import com.chilisoft.weatherx.domain.model.CurrentWeather
 import kotlinx.coroutines.launch
@@ -131,10 +131,10 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
 
     }
 
-    private fun openSettingsDialog(items: List<Units>, selectedIndex: Int, onSelectCallback: (Units) -> Unit) {
+    private fun openSettingsDialog(items: List<TemperatureUnits>, selectedIndex: Int, onSelectCallback: (TemperatureUnits) -> Unit) {
         hideSettingsDialog()
         settingsDialog = AlertDialog.Builder(this)
-            .setSingleChoiceItems(items.map { it.fullName }.toTypedArray(), selectedIndex) { dialog, _ ->
+            .setSingleChoiceItems(items.map { it.unitName }.toTypedArray(), selectedIndex) { dialog, _ ->
                 val selectedPosition: Int = (dialog as AlertDialog).listView.checkedItemPosition
                 onSelectCallback(items[selectedPosition])
                 settingsDialog?.dismiss()
