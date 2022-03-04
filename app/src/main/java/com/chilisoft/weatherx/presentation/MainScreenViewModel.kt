@@ -24,8 +24,8 @@ class MainScreenViewModel(
     private val _stateHourlyForecast = MutableStateFlow<UiState<List<HourlyForecast>>>(UiState.Loading)
     val stateHourlyForecast: StateFlow<UiState<List<HourlyForecast>>> = _stateHourlyForecast
 
-    fun fetchWeather(city: String) {
-        getHourlyForecastUseCase(city)
+    fun fetchWeather(city: String, unit: Units) {
+        getHourlyForecastUseCase(city, unit)
             .onEach { result ->
                 when (result) {
                     is Resource.Loading -> {
@@ -41,7 +41,7 @@ class MainScreenViewModel(
             }
             .launchIn(viewModelScope)
 
-        getCurrentWeatherUseCase(city)
+        getCurrentWeatherUseCase(city, unit)
             .onEach { result ->
                 when (result) {
                     is Resource.Loading -> {
@@ -60,15 +60,15 @@ class MainScreenViewModel(
     }
 
 
-    fun getSelectedUnit(): Int {
-        TODO("Not yet implemented")
+    fun getPreferedUnit(): Units {
+        return Units.Celsius
     }
 
     fun getSettingItems(): List<Units> {
         return listOf(Units.Fahrenheit, Units.Celsius)
     }
 
-    fun saveSelectedUnit() {
+    fun savePreferedUnit(units: Units) {
         TODO("Not yet implemented")
     }
 }

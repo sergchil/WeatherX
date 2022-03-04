@@ -1,6 +1,7 @@
 package com.chilisoft.weatherx.data.remote.usecase
 
 import com.chilisoft.weatherx.common.Resource
+import com.chilisoft.weatherx.common.Units
 import com.chilisoft.weatherx.data.mapper.toCurrentWeather
 import com.chilisoft.weatherx.domain.model.CurrentWeather
 import com.chilisoft.weatherx.domain.repository.WeatherRepository
@@ -12,10 +13,10 @@ import java.io.IOException
 
 class GetCurrentWeatherUseCaseImpl(private val weatherRepository: WeatherRepository) : GetCurrentWeatherUseCase {
 
-    override fun invoke(city: String): Flow<Resource<CurrentWeather>> = flow {
+    override fun invoke(city: String, unit: Units): Flow<Resource<CurrentWeather>> = flow {
         try {
             emit(Resource.Loading())
-            val weather = weatherRepository.getCurrentWeather(city).toCurrentWeather()
+            val weather = weatherRepository.getCurrentWeather(city, unit.networkParam).toCurrentWeather()
             emit(Resource.Success(weather))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

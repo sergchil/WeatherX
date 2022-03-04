@@ -5,7 +5,7 @@ import com.chilisoft.weatherx.data.remote.dto.NetworkFiveDaysThreeHourForecast
 
 interface WeatherRepository {
 
-    suspend fun getHourlyForecast(city: String): NetworkFiveDaysThreeHourForecast
+    suspend fun getHourlyForecast(city: String, unit: String): NetworkFiveDaysThreeHourForecast
 
-    suspend fun getCurrentWeather(city: String): NetworkCurrentWeatherForecast
+    suspend fun getCurrentWeather(city: String, unit: String): NetworkCurrentWeatherForecast
 }

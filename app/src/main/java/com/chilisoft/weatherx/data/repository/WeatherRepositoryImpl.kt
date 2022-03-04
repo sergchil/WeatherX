@@ -8,11 +8,11 @@ class WeatherRepositoryImpl(
     private val api: WeatherService
 ) : WeatherRepository {
 
-    override suspend fun getHourlyForecast(city: String): NetworkFiveDaysThreeHourForecast {
-        return api.getHourlyForecast(city)
+    override suspend fun getHourlyForecast(city: String, unit: String): NetworkFiveDaysThreeHourForecast {
+        return api.getHourlyForecast(city, unit)
     }
 
-    override suspend fun getCurrentWeather(city: String): NetworkCurrentWeatherForecast {
-        return api.getCurrentWeather(city)
+    override suspend fun getCurrentWeather(city: String, unit: String): NetworkCurrentWeatherForecast {
+        return api.getCurrentWeather(city, unit)
     }
 }

@@ -51,7 +51,7 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
         handleInsets()
         setupHourlyRecyclerView()
         registerObservables()
-        mainScreenViewModel.fetchWeather("yerevan")
+        mainScreenViewModel.fetchWeather("yerevan", mainScreenViewModel.getPreferedUnit())
     }
 
     private fun setupHourlyRecyclerView() {
@@ -119,11 +119,13 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
         binding.realFeel.detail.text = data.realFeel
 
         binding.settingsButton.setOnClickListener {
-            val index = mainScreenViewModel.getSelectedUnit()
+
             val items = mainScreenViewModel.getSettingItems()
+            val index = items.indexOf(mainScreenViewModel.getPreferedUnit())
+
             openSettingsDialog(items, index) {
-                mainScreenViewModel.saveSelectedUnit()
-                mainScreenViewModel.fetchWeather("yerevan")
+                mainScreenViewModel.savePreferedUnit(it)
+                mainScreenViewModel.fetchWeather("yerevan", it)
             }
         }
 
