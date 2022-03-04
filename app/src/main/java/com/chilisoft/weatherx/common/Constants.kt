@@ -7,4 +7,8 @@ object Constants {
     const val BASE_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss"
 
     const val HOURLY_FORECAST_DATE_TIME_PATTERN = "EEE dd\nHH:mm"
+    const val CURRENT_WEATHER_DATE_TIME_PATTERN = "EEEE, dd MMMM"
+
+    const val CELSIUS = "°C" // For temperature in Celsius use units=metric
+    const val FAHRENHEIT = "°F" // For temperature in Fahrenheit use units=imperial
 }

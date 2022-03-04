@@ -16,7 +16,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="Mon"
+        tools:text="Mon"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/detail"
@@ -31,7 +31,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_weather" />
+        tools:src="@drawable/ic_weather" />
 
     <!--temperature-->
     <TextView
@@ -41,7 +41,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_medium"
         android:includeFontPadding="false"
-        android:text="32"
+        tools:text="32"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/detail"

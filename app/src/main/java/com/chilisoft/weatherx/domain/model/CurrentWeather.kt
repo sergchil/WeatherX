@@ -1,7 +1,7 @@
 package com.chilisoft.weatherx.domain.model
 
 data class CurrentWeather(
-    val weakDay: String,
+    val weakDay: Long,
     val city: String,
     val country: String,
     val temperature: String,

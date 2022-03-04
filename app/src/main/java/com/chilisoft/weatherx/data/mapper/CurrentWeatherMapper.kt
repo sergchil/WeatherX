@@ -7,7 +7,7 @@ import com.chilisoft.weatherx.domain.model.CurrentWeather
 
 fun NetworkCurrentWeatherForecast.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(
-        weakDay = dt.toString(),
+        weakDay = dt * 1000L, // convert epoch to instant
         city = name,
         country = sys.country,
         temperature = main.temp.toString(),
