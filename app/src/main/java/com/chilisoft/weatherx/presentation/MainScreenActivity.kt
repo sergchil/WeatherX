@@ -51,7 +51,7 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
         handleInsets()
         setupHourlyRecyclerView()
         registerObservables()
-        mainScreenViewModel.fetchWeather("yerevan", mainScreenViewModel.getPreferedUnit())
+        mainScreenViewModel.fetchWeather("yerevan", mainScreenViewModel.getPreferredUnit())
     }
 
     private fun setupHourlyRecyclerView() {
@@ -121,10 +121,10 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
         binding.settingsButton.setOnClickListener {
 
             val items = mainScreenViewModel.getSettingItems()
-            val index = items.indexOf(mainScreenViewModel.getPreferedUnit())
+            val index = items.indexOf(mainScreenViewModel.getPreferredUnit())
 
             openSettingsDialog(items, index) {
-                mainScreenViewModel.savePreferedUnit(it)
+                mainScreenViewModel.savePreferredUnit(it)
                 mainScreenViewModel.fetchWeather("yerevan", it)
             }
         }
@@ -134,10 +134,13 @@ class MainScreenActivity : AppCompatActivity(R.layout.activity_main) {
     private fun openSettingsDialog(items: List<Units>, selectedIndex: Int, onSelectCallback: (Units) -> Unit) {
         hideSettingsDialog()
         settingsDialog = AlertDialog.Builder(this)
-            .setSingleChoiceItems(items.map { it.fullName }.toTypedArray(), selectedIndex, null)
-            .setPositiveButton("OK") { dialog, whichButton ->
+            .setSingleChoiceItems(items.map { it.fullName }.toTypedArray(), selectedIndex) { dialog, _ ->
                 val selectedPosition: Int = (dialog as AlertDialog).listView.checkedItemPosition
                 onSelectCallback(items[selectedPosition])
+                settingsDialog?.dismiss()
+            }
+            .setCancelable(true)
+            .setNeutralButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

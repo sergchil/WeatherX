@@ -75,4 +75,9 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:2.0.0-rc01")
 
+    // data store (shared prefs)
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+
+
 }

@@ -1,6 +1,9 @@
 package com.chilisoft.weatherx.common
 
 object Constants {
+    const val PREF_KEY_PREFERRED_UNIT = "preferred_unit"
+
+
     const val ICON_PLACEHOLDER = "{ICON_PLACEHOLDER}"
     const val BASE_DATA_URL = "https://api.openweathermap.org/data/2.5/"
     const val BASE_ICON_URL = "https://openweathermap.org/img/wn/$ICON_PLACEHOLDER@2x.png"

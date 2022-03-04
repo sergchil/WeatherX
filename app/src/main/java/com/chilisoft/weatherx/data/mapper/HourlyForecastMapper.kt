@@ -9,6 +9,7 @@ import com.chilisoft.weatherx.data.remote.dto.NetworkFiveDaysThreeHourForecast
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.round
 
 fun NetworkFiveDaysThreeHourForecast.toHourlyForecast(): List<HourlyForecast> {
     return list.map {
@@ -18,7 +19,7 @@ fun NetworkFiveDaysThreeHourForecast.toHourlyForecast(): List<HourlyForecast> {
                 DateFormat.format(HOURLY_FORECAST_DATE_TIME_PATTERN, date).toString()
             },
             icon = BASE_ICON_URL.replace(ICON_PLACEHOLDER, it.weather.first().icon),
-            temperature = it.main.temp.toString()
+            temperature = round(it.main.temp).toInt().toString()
         )
     }
 }

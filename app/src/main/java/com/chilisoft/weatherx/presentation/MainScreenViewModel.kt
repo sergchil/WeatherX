@@ -8,14 +8,19 @@ import com.chilisoft.weatherx.domain.model.CurrentWeather
 import com.chilisoft.weatherx.domain.model.HourlyForecast
 import com.chilisoft.weatherx.domain.usecase.GetCurrentWeatherUseCase
 import com.chilisoft.weatherx.domain.usecase.GetHourlyForecastUseCase
+import com.chilisoft.weatherx.domain.usecase.GetPreferredUnitUseCase
+import com.chilisoft.weatherx.domain.usecase.SavePreferredUnitUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+
 class MainScreenViewModel(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getHourlyForecastUseCase: GetHourlyForecastUseCase,
+    private val getPreferredUnitUseCase: GetPreferredUnitUseCase,
+    private val savePreferredUnitUseCase: SavePreferredUnitUseCase
 ) : ViewModel() {
 
     private val _stateCurrentWeather = MutableStateFlow<UiState<CurrentWeather>>(UiState.Loading)
@@ -59,16 +64,15 @@ class MainScreenViewModel(
             .launchIn(viewModelScope)
     }
 
-
-    fun getPreferedUnit(): Units {
-        return Units.Celsius
+    fun getPreferredUnit(): Units {
+        return getPreferredUnitUseCase()
     }
 
     fun getSettingItems(): List<Units> {
         return listOf(Units.Fahrenheit, Units.Celsius)
     }
 
-    fun savePreferedUnit(units: Units) {
-        TODO("Not yet implemented")
+    fun savePreferredUnit(units: Units) {
+        savePreferredUnitUseCase(units)
     }
 }
